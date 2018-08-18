@@ -1,0 +1,75 @@
+變更域名
+
+define('WP_SITEURL', 'http://新的網址');
+define('WP_HOME', 'http://新的網址');
+
+--------------------------------------------------------------------------------------
+
+利用SQL更新欄位內的資料
+
+update wp_posts set post_content=REPLACE(post_content,'原來字串','新的字串')
+
+--------------------------------------------------------------------------------------
+
+
+連結 jQuery 函式庫
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+
+--------------------------------------------------------------------------------------
+
+
+<script>
+$(function(){
+	//亂數標籤雲
+	var fSize, fColor;
+	$(".tagcloud a").each(function() {
+        fSize=Math.ceil(Math.random()*15+13);
+		function hex(){
+			fColor=Math.floor(Math.random()*210).toString(16);
+			if(fColor.length < 2) fColor = 0 + fColor;
+			return fColor;
+		}
+		$(this).attr("style", "font-size:" + fSize + "px; line-height:1.2em; color:#" + hex() + hex() + hex() );
+    });
+	
+	//偵測文章頁尾產生上、下篇導覽
+	var target;
+	var $box=$('#content > div').eq(0);
+	var $btn=$('.navigation');
+	
+	todo();
+
+	function todo(){
+		target=$(document).scrollTop()+$(window).height();
+		target > $box.outerHeight(false)+$box.offset().top ? $btn.fadeIn(800) : $btn.fadeOut(800);
+	}
+	
+	$(window).scroll(function(){ todo();});
+	
+	$(window).resize(function(){ todo();});
+});
+</script>
+
+--------------------------------------------------------------------------------------
+
+編輯器 Add NextPage Button
+add_filter('mce_buttons','wysiwyg_editor');
+function wysiwyg_editor($mce_buttons) {
+	$pos = array_search('wp_more',$mce_buttons,true);
+	if ($pos !== false) {
+		$tmp_buttons = array_slice($mce_buttons, 0, $pos+1);
+		$tmp_buttons[] = 'wp_page';
+		$mce_buttons = array_merge($tmp_buttons, array_slice($mce_buttons, $pos+1));
+	}
+	return $mce_buttons;
+}
+
+--------------------------------------------------------------------------------------
+
+將網站的APP圖示加到手機的主畫面
+
+<link rel="apple-touch-icon" href="http://網域名稱/資料夾/57.jpg">
+<link rel="apple-touch-icon" href="http://網域名稱/資料夾/72.jpg">
+<link rel="apple-touch-icon" href=" http://網域名稱/資料夾/114.jpg">
